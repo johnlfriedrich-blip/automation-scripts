@@ -1,0 +1,11 @@
+# Logs and temp
+*.log
+*.tmp
+*.bak
+
+# VS Code
+.vscode/
+
+# OneDrive sync artifacts
+*.lnk
+*.DS_Store
