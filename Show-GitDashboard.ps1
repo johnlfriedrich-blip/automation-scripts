@@ -1,9 +1,20 @@
+# Write-Log helper function
+function Write-Log {
+    param ([string]$Message)
+    Write-Host $Message
+    Add-Content -Path $logPath -Value $Message
+}
+
+# Main dashboard function
 function Show-GitDashboard {
     param (
         [int]$CommitCount = 10
     )
 
-    Write-Host "`n📦 Git Dashboard for $PWD`n" -ForegroundColor Cyan
+    $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    $logPath = "$PSScriptRoot\GitDashboard_$timestamp.log"
+
+    Write-Log "`n📦 Git Dashboard for $PWD`n"
 
     # Repo Summary
     $branch = git rev-parse --abbrev-ref HEAD
@@ -11,26 +22,26 @@ function Show-GitDashboard {
     $remote = git remote get-url origin
     $totalCommits = git rev-list --count HEAD
 
-    Write-Host "🔹 Branch: $branch"
-    Write-Host "🔹 Last Commit: $lastCommit"
-    Write-Host "🔹 Total Commits: $totalCommits"
-    Write-Host "🔹 Remote: $remote`n"
+    Write-Log "🔹 Branch: $branch"
+    Write-Log "🔹 Last Commit: $lastCommit"
+    Write-Log "🔹 Total Commits: $totalCommits"
+    Write-Log "🔹 Remote: $remote`n"
 
     # Commit History
-    Write-Host "🕓 Recent Commits:`n"
-    git log -$CommitCount --pretty=format:"%C(yellow)%h%Creset - %C(cyan)%an%Creset - %s (%Cgreen%cr%Creset)" | ForEach-Object { Write-Host $_ }
+    Write-Log "🕓 Recent Commits:`n"
+    git log -$CommitCount --pretty=format:"%h - %an - %s (%cr)" | ForEach-Object { Write-Log $_ }
 
     # Sync Status
-    Write-Host "`n🔄 Sync Status:`n"
-    git status -sb
+    Write-Log "`n🔄 Sync Status:`n"
+    git status -sb | ForEach-Object { Write-Log $_ }
 
     # Tags
-    Write-Host "`n🏷️ Tags:`n"
+    Write-Log "`n🏷️ Tags:`n"
     git tag --sort=-creatordate | ForEach-Object {
         $tagCommit = git rev-list -n 1 $_
-        Write-Host "$_ → $tagCommit"
+        Write-Log "$_ → $tagCommit"
     }
-
-    Optional: Export to log
-    Out-File -FilePath "GitDashboard_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
 }
+
+# Auto-run the dashboard
+Show-GitDashboard -CommitCount 10
