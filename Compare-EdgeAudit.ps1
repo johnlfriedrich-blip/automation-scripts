@@ -7,7 +7,7 @@ New-Item -Path $logFolder -ItemType Directory -Force | Out-Null
 
 # 1. Active Edge Processes
 Get-Process | Where-Object { $_.Name -like "*msedge*" } |
-    Select Name, Id, StartTime |
+    Select-Object Name, Id, StartTime |
     Out-File "$logFolder\ActiveProcesses.txt"
 
 # 2. Startup Boost and Background Extensions
@@ -32,7 +32,7 @@ $defaultPDF = Get-ItemProperty -Path $pdfPath -ErrorAction SilentlyContinue
 
 # 5. Scheduled Tasks Related to Edge
 Get-ScheduledTask | Where-Object { $_.TaskName -like "*Edge*" } |
-    Select TaskName, State |
+    Select-Object TaskName, State |
     Out-File "$logFolder\EdgeTasks.txt"
 
 # 6. Completion Message
