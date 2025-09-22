@@ -1,57 +1,64 @@
-# Daily-GitRoutine.ps1 — Modular Git Routine for Audit-Ready Workflows
+# Set working directory
+Set-Location "$env:OneDrive\Scripts"
 
-$repoPath = "$env:USERPROFILE\OneDrive\Scripts"
-Set-Location $repoPath
+# Log setup
+$logPath = "$env:OneDrive\Scripts\GitRoutineLog_$(Get-Date -Format 'yyyyMMdd_HHmmss').txt"
+"[$(Get-Date)] Starting Git routine..." | Out-File $logPath
 
-Write-Host "`n🔄 Syncing with origin..." -ForegroundColor Cyan
-git pull --rebase
+# Placeholder registry
+$placeholders = @(
+    "Modules/ArchiveDownloads.ps1",
+    "Modules/LogSummary.ps1",
+    "Modules/ValidateSync.ps1"
+)
 
-Write-Host "`n📋 Git status:" -ForegroundColor Cyan
-git status
-
-Write-Host "`n🧭 Recent commits:" -ForegroundColor Cyan
-git log --oneline --graph --decorate -n 10
-
-Write-Host "`n🧪 Running scoped test harness..." -ForegroundColor Cyan
-# Replace with your actual test harness logic
-if (Test-Path ".\tests\run_tests.py") {
-    python .\tests\run_tests.py
-} else {
-    Write-Host "⚠️ No test harness found." -ForegroundColor Yellow
+# Step 1: Validate placeholders
+foreach ($file in $placeholders) {
+    $fullPath = Join-Path $PWD $file
+    if (-not (Test-Path $fullPath)) {
+        "[$(Get-Date)] MISSING: $file — recreating zero-byte placeholder." | Out-File $logPath -Append
+        New-Item $fullPath -ItemType File | Out-Null
+    } else {
+        $size = (Get-Item $fullPath).Length
+        if ($size -ne 0) {
+            "[$(Get-Date)] WARNING: $file is not zero-byte — skipping recreation." | Out-File $logPath -Append
+        }
+    }
 }
 
-Write-Host "`n📝 Interactive staging..." -ForegroundColor Cyan
-git add -p
-
-Write-Host "`n🔐 Committing changes..." -ForegroundColor Cyan
-$commitMsg = Read-Host "Enter commit message"
-if ($commitMsg) {
-    git commit -m "$commitMsg"
-} else {
-    Write-Host "⚠️ No commit message entered. Skipping commit." -ForegroundColor Yellow
+# Step 2: Pin placeholders locally
+foreach ($file in $placeholders) {
+    $fullPath = Join-Path $PWD $file
+    attrib -P +U $fullPath  # Pin file locally
 }
 
-Write-Host "`n🚀 Pushing to origin..." -ForegroundColor Cyan
-git push origin main
+# Step 3: Git status audit
+$gitStatus = git status --porcelain
+$deletions = $gitStatus | Where-Object { $_ -match "^ D " }
 
-Write-Host "`n🏷️ Tagging release (optional)..." -ForegroundColor Cyan
-$tag = Read-Host "Enter tag (or leave blank to skip)"
-if ($tag) {
-    git tag -a $tag -m "$commitMsg"
-    git push origin $tag
+# Step 4: Block deletion of placeholders
+$flagged = @()
+foreach ($line in $deletions) {
+    $deletedFile = $line -replace "^ D\s+", ""
+    if ($placeholders -contains $deletedFile) {
+        $flagged += $deletedFile
+    }
 }
 
-Write-Host "`n🧹 Auditing untracked files..." -ForegroundColor Cyan
-git status --untracked-files=all > .\GitUntracked.log
-Write-Host "🔍 Untracked files logged to GitUntracked.log"
-
-Write-Host "`n🧪 Previewing cleanup..." -ForegroundColor Cyan
-git clean -n -d
-
-$confirm = Read-Host "Proceed with cleanup of untracked files? (y/n)"
-if ($confirm -eq "y") {
-    Write-Host "`n🧨 Cleaning untracked files..." -ForegroundColor Cyan
-    git clean -f -d
-} else {
-    Write-Host "❌ Cleanup skipped." -ForegroundColor Yellow
+if ($flagged.Count -gt 0) {
+    "[$(Get-Date)] BLOCKED: Git attempted to delete placeholder files:" | Out-File $logPath -Append
+    $flagged | Out-File $logPath -Append
+    Write-Host "`n⚠️ Git attempted to delete placeholder files:`n$($flagged -join "`n")"
+    $confirm = Read-Host "Do you want to override and allow deletion? (y/n)"
+    if ($confirm -ne 'y') {
+        "[$(Get-Date)] Git deletion aborted by user." | Out-File $logPath -Append
+        exit
+    }
 }
+
+# Step 5: Proceed with Git routine
+git add .
+git commit -m "Daily sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+git push
+
+"[$(Get-Date)] Git routine completed." | Out-File $logPath -Append
