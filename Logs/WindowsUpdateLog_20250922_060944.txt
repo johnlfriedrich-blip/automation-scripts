@@ -1,0 +1,16 @@
+
+ComputerName Status     KB          Size Title
+------------ ------     --          ---- -----
+DESKTOP-2NC… -------    KB2267602    2GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602 (Ver…
+DESKTOP-2NC… -------                24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+
+
+X ComputerName Result     KB          Size Title
+- ------------ ------     --          ---- -----
+1 DESKTOP-2NC… Accepted   KB2267602    2GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602 (V…
+1 DESKTOP-2NC… Accepted               24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+2 DESKTOP-2NC… Downloaded KB2267602    2GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602 (V…
+2 DESKTOP-2NC… Downloaded             24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+3 DESKTOP-2NC… Installed  KB2267602    2GB Security Intelligence Update for Microsoft Defender Antivirus - KB2267602 (V…
+3 DESKTOP-2NC… Installed              24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+

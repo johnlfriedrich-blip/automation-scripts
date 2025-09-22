@@ -1,0 +1,5 @@
+{
+  "target_url": "https://www.spokeo.com/sample-profile",
+  "timeout": 10,
+  "retry": 3
+}

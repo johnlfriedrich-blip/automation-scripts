@@ -1,0 +1,12 @@
+
+ComputerName Status     KB          Size Title
+------------ ------     --          ---- -----
+DESKTOP-OP4… -------                24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+
+
+X ComputerName Result     KB          Size Title
+- ------------ ------     --          ---- -----
+1 DESKTOP-OP4… Accepted               24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+2 DESKTOP-OP4… Downloaded             24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+3 DESKTOP-OP4… Installed              24KB Dell Inc. - Monitor - Dell E2213H(Digital)
+

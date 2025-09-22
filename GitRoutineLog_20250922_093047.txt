@@ -1,0 +1,7 @@
+
+    Set-Location "$env:OneDrive\Scripts"
+    git status
+    git add .
+    git commit -m "Sync $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+    git push
+
