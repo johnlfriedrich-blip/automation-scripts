@@ -1,0 +1,13 @@
+[
+  {
+    "site": "Infotracer",
+    "method": "form",
+    "opt_out_url": "https://www.infotracer.com/privacy/",
+    "fields": ["full_name", "email"]
+  },
+  {
+    "site": "EmailTracer",
+    "method": "email",
+    "opt_out_email": "privacy@emailtracer.com"
+  }
+]
