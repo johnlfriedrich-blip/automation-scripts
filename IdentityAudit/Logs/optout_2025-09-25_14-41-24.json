@@ -1,0 +1,23 @@
+[
+  {
+    "site": "Infotracer",
+    "status_code": 200,
+    "success": true
+  },
+  {
+    "site": "EmailTracer",
+    "status": "sent"
+  },
+  {
+    "site": "SearchUSAPeople",
+    "status": "manual_required"
+  },
+  {
+    "site": "GovernmentRegistry",
+    "status": "manual_required"
+  },
+  {
+    "site": "NDB",
+    "status": "manual_required"
+  }
+]

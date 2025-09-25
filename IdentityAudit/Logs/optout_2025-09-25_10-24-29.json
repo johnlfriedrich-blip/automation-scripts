@@ -1,0 +1,11 @@
+[
+  {
+    "site": "Infotracer",
+    "status_code": 200,
+    "success": true
+  },
+  {
+    "site": "EmailTracer",
+    "status": "sent"
+  }
+]
