@@ -1,0 +1,6 @@
+Drive: 
+Protection Status: On
+Encryption Method: XtsAes256
+Key Protectors: Tpm RecoveryPassword
+Auto Unlock Enabled: 
+❌ No recovery key backup detected.

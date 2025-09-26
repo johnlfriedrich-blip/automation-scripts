@@ -1,0 +1,38 @@
+[
+  {
+    "site": "Infotracer",
+    "method": "form",
+    "opt_out_url": "https://www.infotracer.com/privacy/",
+    "fields": ["full_name", "email"]
+  },
+  {
+    "site": "EmailTracer",
+    "method": "email",
+    "opt_out_email": "privacy@emailtracer.com"
+  },
+  {
+    "site": "SearchUSAPeople",
+    "method": "form",
+    "opt_out_url": "https://www.searchusapeople.com/optout",
+    "fields": ["full_name", "email"]
+  },
+  {
+    "site": "GovernmentRegistry",
+    "method": "form",
+    "opt_out_url": "https://www.governmentregistry.org/optout",
+    "fields": ["full_name", "email"]
+  },
+  {
+    "site": "NDB",
+    "method": "form",
+    "opt_out_url": "https://www.ndb.com/optout",
+    "fields": ["full_name", "email"]
+  },
+  {
+    "site": "PeopleLookUp",
+    "method": "email",
+    "opt_out_email": "support@peoplelookup.co"
+  }
+
+
+]
