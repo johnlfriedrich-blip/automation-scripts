@@ -1,0 +1,16 @@
+{
+  ".jpg":  "Pictures\\SortedImages",
+  ".jpeg": "Pictures\\SortedImages",
+  ".png":  "Pictures\\SortedImages",
+  ".gif":  "Pictures\\SortedImages",
+  ".bmp":  "Pictures\\SortedImages",
+  ".tiff": "Pictures\\SortedImages",
+  ".pdf":  "Documents\\SortedDocs",
+  ".docx": "Documents\\SortedDocs",
+  ".xlsx": "Documents\\SortedDocs",
+  ".pptx": "Documents\\SortedDocs",
+  ".txt":  "Documents\\SortedDocs",
+  ".zip":  "Documents\\SortedDocs",
+  ".exe": "C:\\Users\\JohnFriedrich\\Downloads\\Installers",
+  ".msi": "C:\\Users\\JohnFriedrich\\Downloads\\Installers"
+}
